@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Hospital - Patient Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f8fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo svg {
+            margin-right: 10px;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 20px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: #e0f2ff;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: #1565c0;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0d47a1;
+        }
+        
+        .btn-secondary {
+            background-color: #fff;
+            color: #1e88e5;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e3f2fd;
+        }
+        
+        .hero {
+            padding: 60px 0;
+            text-align: center;
+            background-color: #e3f2fd;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #1565c0;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: #546e7a;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            width: 30%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .feature-card svg {
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #1565c0;
+        }
+        
+        .feature-card p {
+            color: #546e7a;
+        }
+        
+        footer {
+            background-color: #263238;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        /* Login & Signup Forms */
+        .form-container {
+            max-width: 400px;
+            margin: 60px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1565c0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #455a64;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #cfd8dc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #1e88e5;
+            box-shadow: 0 0 0 2px rgba(30, 136, 229, 0.2);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .form-footer a {
+            color: #1e88e5;
+            text-decoration: none;
+        }
+        
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Dashboard styles */
+        .dashboard {
+            padding: 40px 0;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .dashboard-card h3 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        
+        .ticket-list {
+            list-style: none;
+        }
+        
+        .ticket-item {
+            border-bottom: 1px solid #f0f0f0;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .ticket-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background-color: #fff9c4;
+            color: #fbc02d;
+        }
+        
+        .status-confirmed {
+            background-color: #c8e6c9;
+            color: #388e3c;
+        }
+        
+        /* Pages visibility control */
+        #home-page, #login-page, #signup-page, #dashboard-page {
+            display: none;
+        }
+        
+        #home-page {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    MediCare Hospital
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home-page')">Home</a></li>
+                    <li><a href="#" onclick="showPage('login-page')">Login</a></li>
+                    <li><a href="#" onclick="showPage('signup-page')">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home-page">
+        <section class="hero">
+            <div class="container">
+                <h1>Welcome to Molefe's MediCare Hospital Patient Portal</h1>
+                <p>Quick and efficient appointment booking system. Skip the lines and manage your hospital visits with ease.</p>
+                <button class="btn btn-primary" onclick="showPage('signup-page')">Get Started</button>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="features">
+                <div class="feature-card">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1e88e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        <path d="M9 14l2 2 4-4"></path>
+                    </svg>
+                    <h3>Easy Booking</h3>
+                    <p>Book appointments with our doctors and specialists in just a few clicks.</p>
+                </div>
+                <div class="feature-card">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1e88e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <h3>Queue Management</h3>
+                    <p>Real-time updates on your queue status and estimated waiting time.</p>
+                </div>
+                <div class="feature-card">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1e88e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <h3>Secure & Private</h3>
+                    <p>Your health information is protected with industry-leading security measures.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Login Page -->
+    <div id="login-page">
+        <div class="container">
+            <div class="form-container">
+                <h2>Login to Your Account</h2>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" style="width: 100%;" onclick="handleLogin()">Log In</button>
+                    <div class="form-footer">
+                        <p>Don't have an account? <a href="#" onclick="showPage('signup-page')">Sign up</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signup-page">
+        <div class="container">
+            <div class="form-container">
+                <h2>Create a New Account</h2>
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" style="width: 100%;" onclick="handleSignup()">Sign Up</button>
+                    <div class="form-footer">
+                        <p>Already have an account? <a href="#" onclick="showPage('login-page')">Log in</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Page (After Login) -->
+    <div id="dashboard-page">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>Patient Dashboard</h2>
+                <button class="btn btn-secondary" onclick="logout()">Log Out</button>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3>My Appointments</h3>
+                <ul class="ticket-list">
+                    <li class="ticket-item">
+                        <div>
+                            <strong>Dr. Sarah Johnson</strong> - Cardiology
+                            <p>May 5, 2025 at 10:30 AM</p>
+                        </div>
+                        <span class="ticket-status status-confirmed">Confirmed</span>
+                    </li>
+                    <li class="ticket-item">
+                        <div>
+                            <strong>Dr. Michael Chen</strong> - Neurology
+                            <p>May 12, 2025 at 2:15 PM</p>
+                        </div>
+                        <span class="ticket-status status-pending">Pending</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="dashboard-card">
+                <h3>Book New Appointment</h3>
+                <form id="booking-form">
+                    <div class="form-group">
+                        <label for="department">Department</label>
+                        <select id="department" class="form-control">
+                            <option value="">Select Department</option>
+                            <option value="cardiology">Cardiology</option>
+                            <option value="neurology">Neurology</option>
+                            <option value="orthopedics">Orthopedics</option>
+                            <option value="pediatrics">Pediatrics</option>
+                            <option value="dermatology">Dermatology</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-date">Preferred Date</label>
+                        <input type="date" id="appointment-date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-time">Preferred Time</label>
+                        <input type="time" id="appointment-time" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="appointment-notes">Additional Notes</label>
+                        <textarea id="appointment-notes" class="form-control" rows="3" placeholder="Describe your symptoms or reason for visit"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-primary">Request Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Molefe's MediCare Hospital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Function to show different pages
+        function showPage(pageId) {
+            // Hide all pages
+            document.getElementById('home-page').style.display = 'none';
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('signup-page').style.display = 'none';
+            document.getElementById('dashboard-page').style.display = 'none';
+            
+            // Show the selected page
+            document.getElementById(pageId).style.display = 'block';
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+        
+        // Handle login
+        function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Basic validation
+            if (!email || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            
+            // In a real app, you would send this to a server
+            // For demo purposes, just redirect to dashboard
+            showPage('dashboard-page');
+        }
+        
+        // Handle signup
+        function handleSignup() {
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            
+            // Basic validation
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields.');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+            
+            // In a real app, you would send this to a server
+            // For demo purposes, just redirect to dashboard
+            showPage('dashboard-page');
+        }
+        
+        // Logout function
+        function logout() {
+            // In a real app, you would clear session/storage
+            showPage('home-page');
+        }
+    </script>
+</body>
+</html>
