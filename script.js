@@ -1,4 +1,3 @@
- <script>
         // Function to show different pages
         function showPage(pageId) {
             // Hide all pages
@@ -58,4 +57,3 @@
             // In a real app, you would clear session/storage
             showPage('home-page');
         }
-    </script>
