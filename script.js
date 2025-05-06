@@ -271,69 +271,9 @@ function logout() {
     showPage('home-page');
 }
 
-// Add some basic CSS for messages
-const style = document.createElement('style');
-style.textContent = `
-    .message-container {
-        margin-bottom: 20px;
-    }
-    
-    .message {
-        padding: 10px;
-        border-radius: 4px;
-        margin-bottom: 10px;
-    }
-    
-    .message.error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-    
-    .message.success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-    
-    .dashboard-container {
-        max-width: 600px;
-        margin: 40px auto;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 5px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    .user-info {
-        margin: 20px 0;
-        padding: 15px;
-        background-color: #fff;
-        border-radius: 4px;
-        border-left: 4px solid #007bff;
-    }
-    
-    .status-confirmed {
-        color: #155724;
-        background-color: #d4edda;
-        border-radius: 4px;
-        padding: 2px 6px;
-    }
-    
-    .status-pending {
-        color: #856404;
-        background-color: #fff3cd;
-        border-radius: 4px;
-        padding: 2px 6px;
-    }
-    
-    .status-cancelled {
-        color: #721c24;
-        background-color: #f8d7da;
-        border-radius: 4px;
-        padding: 2px 6px;
-    }
-`;
+
+
+
 document.head.appendChild(style);
 
 // Appointment system integration
