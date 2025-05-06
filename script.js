@@ -80,27 +80,14 @@
         // Appointments array to store booked appointments
         let appointments = [
             {
-                id: 1,
-                doctor: "Dr. Paris Ramadwa",
-                department: "Cardiology",
-                date: "May 5, 2025",
-                time: "10:30 AM",
-                notes: "Follow-up after cardiac stress test",
-                status: "confirmed"
+               
             },
             {
-                id: 2,
-                doctor: "Dr. Milicent Mogane",
-                department: "Neurology",
-                date: "May 12, 2025",
-                time: "2:15 PM",
-                notes: "Recurring headaches investigation",
-                status: "pending"
+                
             }
         ];
 
-        // Elements
-        const departmentSelect = document.getElementById('department');
+           const departmentSelect = document.getElementById('department');
         const doctorSelect = document.getElementById('doctor');
         const appointmentDateInput = document.getElementById('appointment-date');
         const appointmentTimeInput = document.getElementById('appointment-time');
@@ -124,6 +111,7 @@
         cancelAppointmentBtn.addEventListener('click', closeModal);
         closeModalBtn.addEventListener('click', closeModal);
         confirmAppointmentBtn.addEventListener('click', addAppointment);
+        document.getElementById('clear-appointments').addEventListener('click', clearAllAppointments);
 
         // Functions
         function populateDoctors() {
@@ -290,6 +278,19 @@
             alert('Logging out...');
             // In a real application, this would redirect to the login page
             // window.location.href = 'login.html';
+        }
+        
+        function clearAllAppointments() {
+            if (appointments.length === 0) {
+                alert('You have no appointments to clear.');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to clear all your appointments? This action cannot be undone.')) {
+                appointments = [];
+                updateAppointmentsList();
+                alert('All appointments have been cleared successfully.');
+            }
         }
 
         // Initialize page
