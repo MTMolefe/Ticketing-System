@@ -119,7 +119,7 @@
         </div>
     </div>
 
-    <!-- Dashboard Page (After Login) -->
+       <!-- Dashboard Page (After Login) -->
     <div id="dashboard-page">
         <div class="container">
             <div class="dashboard-header">
@@ -129,7 +129,7 @@
             
             <div class="dashboard-card">
                 <h3>My Appointments</h3>
-                <ul class="ticket-list">
+                <ul class="ticket-list" id="appointments-list">
                     <li class="ticket-item">
                         <div>
                             <strong>Dr. Paris Ramadwa</strong> - Cardiology
@@ -152,7 +152,7 @@
                 <form id="booking-form">
                     <div class="form-group">
                         <label for="department">Department</label>
-                        <select id="department" class="form-control">
+                        <select id="department" class="form-control" required>
                             <option value="">Select Department</option>
                             <option value="cardiology">Cardiology</option>
                             <option value="neurology">Neurology</option>
@@ -162,22 +162,77 @@
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="doctor">Doctor</label>
+                        <select id="doctor" class="form-control" required>
+                            <option value="">Select Doctor</option>
+                            <!-- Doctors will be populated based on department -->
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="appointment-date">Preferred Date</label>
-                        <input type="date" id="appointment-date" class="form-control">
+                        <input type="date" id="appointment-date" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="appointment-time">Preferred Time</label>
-                        <input type="time" id="appointment-time" class="form-control">
+                        <input type="time" id="appointment-time" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="appointment-notes">Additional Notes</label>
                         <textarea id="appointment-notes" class="form-control" rows="3" placeholder="Describe your symptoms or reason for visit"></textarea>
                     </div>
-                    <button type="button" class="btn btn-primary">Request Appointment</button>
+                    <button type="button" id="request-appointment" class="btn btn-primary">Request Appointment</button>
                 </form>
             </div>
         </div>
     </div>
+    
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Confirm Appointment</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="appointment-details">
+                <!-- Appointment details will be inserted here -->
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" id="cancel-appointment">Cancel</button>
+                <button class="btn btn-primary" id="confirm-appointment">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Molefe's MediCare Hospital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Doctor database
+        const doctors = {
+            cardiology: [
+                { id: 1, name: "Dr. Paris Ramadwa" },
+                { id: 2, name: "Dr. Tlotlo Molefe" }
+            ],
+            neurology: [
+                { id: 3, name: "Dr. Milicent Mogane" },
+                { id: 4, name: "Dr. Karabo Mbeki" }
+            ],
+            orthopedics: [
+                { id: 5, name: "Dr. Letlhogonolo Kwazi" },
+                { id: 6, name: "Dr. Reitumetse Mosehla" }
+            ],
+            pediatrics: [
+                { id: 7, name: "Dr. Nkateko Mkhabela" },
+                { id: 8, name: "Dr. Azola Jokweni" }
+            ],
+            dermatology: [
+                { id: 9, name: "Dr. Precious Moloi" },
+                { id: 10, name: "Dr. David Makhura" }
+            ]
+        };
 
     <footer>
         <div class="container">
