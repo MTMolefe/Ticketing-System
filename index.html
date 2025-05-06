@@ -167,66 +167,6 @@
     </footer>
 
     <!-- JavaScript Files -->
-    <script src="js/main.js"></script>
-    <script>
-        // Additional page navigation handlers
-        document.addEventListener('DOMContentLoaded', function() {
-            // Toggle between login and registration pages
-            const goToRegisterLink = document.getElementById('go-to-register');
-            const goToLoginLink = document.getElementById('go-to-login');
-            const navLoginLink = document.getElementById('nav-login');
-            const loginPage = document.getElementById('login-page');
-            const registrationPage = document.getElementById('registration-page');
-            
-            if (goToRegisterLink) {
-                goToRegisterLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    loginPage.style.display = 'none';
-                    registrationPage.style.display = 'block';
-                });
-            }
-            
-            if (goToLoginLink) {
-                goToLoginLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    registrationPage.style.display = 'none';
-                    loginPage.style.display = 'block';
-                });
-            }
-            
-            if (navLoginLink) {
-                navLoginLink.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    // Check if user is logged in
-                    const token = localStorage.getItem('medicareToken');
-                    if (token) {
-                        // If logged in, show dashboard
-                        if (loginPage) loginPage.style.display = 'none';
-                        if (registrationPage) registrationPage.style.display = 'none';
-                        if (dashboardPage) dashboardPage.style.display = 'block';
-                        // Load appointments
-                        if (typeof loadUserAppointments === 'function') {
-                            loadUserAppointments();
-                        }
-                    } else {
-                        // If not logged in, show login page
-                        if (registrationPage) registrationPage.style.display = 'none';
-                        if (dashboardPage) dashboardPage.style.display = 'none';
-                        if (loginPage) loginPage.style.display = 'block';
-                    }
-                });
-            }
-            
-            // Set min date for appointment booking to today
-            const dateInput = document.getElementById('appointment-date');
-            if (dateInput) {
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const dd = String(today.getDate()).padStart(2, '0');
-                const formattedToday = `${yyyy}-${mm}-${dd}`;
-                dateInput.min = formattedToday;
-            }
-        });
-    </script>
+    <script src="script.js"></script>
+   
 </body>
