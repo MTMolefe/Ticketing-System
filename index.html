@@ -3,79 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molefe's MediCare Hospital</title>
-    <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="css/styles.css">
-
-
+    <title>MediCare Hospital - Patient Portal</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
+    <header>
         <div class="container">
-            <a href="index.html" class="navbar-brand">Molefe's MediCare</a>
-            <div class="nav-links">
-                <a href="#" id="nav-home" class="active">Home</a>
-                <a href="#" id="nav-services">Services</a>
-                <a href="#" id="nav-about">About Us</a>
-                <a href="#" id="nav-contact">Contact</a>
-                <a href="#" id="nav-login" class="btn btn-outline">Login</a>
-            </div>
+            <nav>
+                <div class="logo">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    MediCare Hospital
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home-page')">Home</a></li>
+                    <li><a href="#" onclick="showPage('login-page')">Login</a></li>
+                    <li><a href="#" onclick="showPage('signup-page')">Sign Up</a></li>
+                </ul>
+            </nav>
         </div>
-    </nav>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home-page">
+        <section class="hero">
+            <div class="container">
+                <h1>Welcome to Molefe's MediCare Hospital Patient Portal</h1>
+                <p>Quick and efficient appointment booking system. Skip the lines and manage your hospital visits with ease.</p>
+                <button class="btn btn-primary" onclick="showPage('signup-page')">Get Started</button>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="features">
+                <div class="feature-card">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1e88e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        <path d="M9 14l2 2 4-4"></path>
+                    </svg>
+                    <h3>Easy Booking</h3>
+                    <p>Book appointments with our doctors and specialists in just a few clicks.</p>
+                </div>
+                <div class="feature-card">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1e88e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <h3>Queue Management</h3>
+                    <p>Real-time updates on your queue status and estimated waiting time.</p>
+                </div>
+                <div class="feature-card">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1e88e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <h3>Secure & Private</h3>
+                    <p>Your health information is protected with industry-leading security measures.</p>
+                </div>
+            </div>
+        </section>
+    </div>
 
     <!-- Login Page -->
     <div id="login-page">
         <div class="container">
-            <div class="auth-container">
+            <div class="form-container">
                 <h2>Login to Your Account</h2>
                 <form id="login-form">
                     <div class="form-group">
-                        <label for="login-email">Email</label>
-                        <input type="email" id="login-email" class="form-control" required>
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
                         <label for="login-password">Password</label>
-                        <input type="password" id="login-password" class="form-control" required>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="button" class="btn btn-primary" style="width: 100%;" onclick="handleLogin()">Log In</button>
+                    <div class="form-footer">
+                        <p>Don't have an account? <a href="#" onclick="showPage('signup-page')">Sign up</a></p>
+                    </div>
                 </form>
-                <p class="auth-footer">Don't have an account? <a href="#" id="go-to-register">Register here</a></p>
             </div>
         </div>
     </div>
 
-    <!-- Registration Page -->
-    <div id="registration-page" style="display: none;">
+    <!-- Signup Page -->
+    <div id="signup-page">
         <div class="container">
-            <div class="auth-container">
-                <h2>Create an Account</h2>
-                <form id="registration-form">
+            <div class="form-container">
+                <h2>Create a New Account</h2>
+                <form id="signup-form">
                     <div class="form-group">
-                        <label for="reg-name">Full Name</label>
-                        <input type="text" id="reg-name" class="form-control" required>
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your full name" required>
                     </div>
                     <div class="form-group">
-                        <label for="reg-email">Email</label>
-                        <input type="email" id="reg-email" class="form-control" required>
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email" required>
                     </div>
                     <div class="form-group">
-                        <label for="reg-password">Password</label>
-                        <input type="password" id="reg-password" class="form-control" required>
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a password" required>
                     </div>
                     <div class="form-group">
-                        <label for="reg-confirm-password">Confirm Password</label>
-                        <input type="password" id="reg-confirm-password" class="form-control" required>
+                        <label for="signup-confirm-password">Confirm Password</label>
+                        <input type="password" id="signup-confirm-password" placeholder="Confirm your password" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="button" class="btn btn-primary" style="width: 100%;" onclick="handleSignup()">Sign Up</button>
+                    <div class="form-footer">
+                        <p>Already have an account? <a href="#" onclick="showPage('login-page')">Log in</a></p>
+                    </div>
                 </form>
-                <p class="auth-footer">Already have an account? <a href="#" id="go-to-login">Login here</a></p>
             </div>
         </div>
     </div>
+<!-- Dashboard Page (After Login) -->
 
- <!-- Dashboard Page (After Login) -->
-    <div id="dashboard-page">
+ <div id="dashboard-page">
         <div class="container">
             <div class="dashboard-header">
                 <h2>Patient Dashboard</h2>
@@ -161,14 +206,14 @@
         </div>
     </div>
 
+
     <footer>
         <div class="container">
             <p>&copy; 2025 Molefe's MediCare Hospital. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript Files -->
-    <script src="script.js"></script>
-   
+
+   <script src="script.js"></script>
 </body>
-</html>    
+</html>
