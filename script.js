@@ -1,4 +1,3 @@
- 
         // Function to show different pages
         function showPage(pageId) {
             // Hide all pages
@@ -24,293 +23,6 @@
                 alert('Please fill in all fields.');
                 return;
             }
-            // auth.js - User Authentication System
-
-            // Initialize the authentication system
-            document.addEventListener('DOMContentLoaded', function () {
-                // Set up event listeners for navigation between pages
-                document.getElementById('go-to-register').addEventListener('click', function (e) {
-                    e.preventDefault();
-                    showPage('registration-page');
-                });
-
-                document.getElementById('go-to-login').addEventListener('click', function (e) {
-                    e.preventDefault();
-                    showPage('login-page');
-                });
-
-                // Set up form submission handlers
-                document.getElementById('registration-form').addEventListener('submit', handleRegistration);
-                document.getElementById('login-form').addEventListener('submit', handleLogin);
-
-                // Check if user is already logged in
-                checkAuthStatus();
-            });
-
-            // Function to switch between pages
-            function showPage(pageId) {
-                // Hide all pages
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('registration-page').style.display = 'none';
-
-                // Show the requested page
-                document.getElementById(pageId).style.display = 'block';
-            }
-
-            // Function to handle user registration
-            function handleRegistration(e) {
-                e.preventDefault();
-
-                // Get form values
-                const name = document.getElementById('reg-name').value.trim();
-                const email = document.getElementById('reg-email').value.trim();
-                const password = document.getElementById('reg-password').value;
-                const confirmPassword = document.getElementById('reg-confirm-password').value;
-
-                // Validate form
-                if (!name || !email || !password || !confirmPassword) {
-                    showMessage('Please fill in all fields', 'error');
-                    return;
-                }
-
-                if (password !== confirmPassword) {
-                    showMessage('Passwords do not match', 'error');
-                    return;
-                }
-
-                // Check if user already exists
-                const users = getUsers();
-                if (users.some(user => user.email === email)) {
-                    showMessage('Email is already registered', 'error');
-                    return;
-                }
-
-                // Create new user object (store hashed password in a real application)
-                const newUser = {
-                    id: generateUserId(),
-                    name: name,
-                    email: email,
-                    password: password, // In production, ALWAYS hash passwords
-                    registeredOn: new Date().toISOString()
-                };
-
-                // Add user to storage
-                users.push(newUser);
-                saveUsers(users);
-
-                // Show success message
-                showMessage('Registration successful! You can now log in.', 'success');
-
-                // Reset form and redirect to login
-                document.getElementById('registration-form').reset();
-                showPage('login-page');
-            }
-
-            // Function to handle user login
-            function handleLogin(e) {
-                e.preventDefault();
-
-                // Get form values
-                const email = document.getElementById('login-email').value.trim();
-                const password = document.getElementById('login-password').value;
-
-                // Validate form
-                if (!email || !password) {
-                    showMessage('Please enter both email and password', 'error');
-                    return;
-                }
-
-                // Check credentials
-                const users = getUsers();
-                const user = users.find(user => user.email === email && user.password === password);
-
-                if (!user) {
-                    showMessage('Invalid email or password', 'error');
-                    return;
-                }
-
-                // Set authentication status
-                setAuthenticatedUser(user);
-
-                // Show success message
-                showMessage('Login successful! Redirecting to dashboard...', 'success');
-
-                // Reset form
-                document.getElementById('login-form').reset();
-
-                // Redirect to dashboard (or home page)
-                setTimeout(() => {
-                    redirectToDashboard();
-                }, 1500);
-            }
-
-            // Function to display messages to the user
-            function showMessage(message, type) {
-                // Check if message container exists, create if not
-                let messageContainer = document.querySelector('.message-container');
-                if (!messageContainer) {
-                    messageContainer = document.createElement('div');
-                    messageContainer.className = 'message-container';
-                    document.querySelector('.auth-container').prepend(messageContainer);
-                }
-
-                // Create message element
-                const messageElement = document.createElement('div');
-                messageElement.className = `message ${type}`;
-                messageElement.textContent = message;
-
-                // Add to container
-                messageContainer.innerHTML = '';
-                messageContainer.appendChild(messageElement);
-
-                // Auto-dismiss after a delay
-                setTimeout(() => {
-                    messageElement.remove();
-                }, 5000);
-            }
-
-            // Function to get users from storage
-            function getUsers() {
-                const usersJson = localStorage.getItem('users');
-                return usersJson ? JSON.parse(usersJson) : [];
-            }
-
-            // Function to save users to storage
-            function saveUsers(users) {
-                localStorage.setItem('users', JSON.stringify(users));
-            }
-
-            // Generate a unique user ID
-            function generateUserId() {
-                return Date.now().toString(36) + Math.random().toString(36).substr(2);
-            }
-
-            // Set the authenticated user
-            function setAuthenticatedUser(user) {
-                // Create a safe user object without sensitive info
-                const safeUser = {
-                    id: user.id,
-                    name: user.name,
-                    email: user.email,
-                    isAuthenticated: true
-                };
-
-                // Store in session
-                sessionStorage.setItem('currentUser', JSON.stringify(safeUser));
-            }
-
-            // Check if user is authenticated
-            function checkAuthStatus() {
-                const currentUser = getCurrentUser();
-                if (currentUser && currentUser.isAuthenticated) {
-                    // User is logged in, redirect to dashboard
-                    redirectToDashboard();
-                } else {
-                    // Show login page
-                    showPage('login-page');
-                }
-            }
-
-            // Get the current user
-            function getCurrentUser() {
-                const userJson = sessionStorage.getItem('currentUser');
-                return userJson ? JSON.parse(userJson) : null;
-            }
-
-            // Function to redirect to dashboard
-            function redirectToDashboard() {
-                // Create dashboard page if it doesn't exist
-                let dashboardPage = document.getElementById('dashboard-page');
-                if (!dashboardPage) {
-                    dashboardPage = createDashboardPage();
-                }
-
-                // Hide other pages and show dashboard
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('registration-page').style.display = 'none';
-                dashboardPage.style.display = 'block';
-            }
-
-            // Create dashboard page
-            function createDashboardPage() {
-                const currentUser = getCurrentUser();
-
-                // Create dashboard container
-                const dashboardPage = document.createElement('div');
-                dashboardPage.id = 'dashboard-page';
-
-                // Set content
-                dashboardPage.innerHTML = `
-        <div class="container">
-            <div class="dashboard-container">
-                <h2>Welcome, ${currentUser.name}!</h2>
-                <div class="user-info">
-                    <p><strong>Email:</strong> ${currentUser.email}</p>
-                </div>
-                <button id="logout-button" class="btn btn-danger">Logout</button>
-            </div>
-        </div>
-    `;
-
-                // Add to body
-                document.body.appendChild(dashboardPage);
-
-                // Add logout functionality
-                dashboardPage.querySelector('#logout-button').addEventListener('click', function () {
-                    // Clear session
-                    sessionStorage.removeItem('currentUser');
-
-                    // Redirect to login
-                    dashboardPage.style.display = 'none';
-                    showPage('login-page');
-                });
-
-                return dashboardPage;
-            }
-
-            // Add some basic CSS for messages
-            const style = document.createElement('style');
-            style.textContent = `
-    .message-container {
-        margin-bottom: 20px;
-    }
-    
-    .message {
-        padding: 10px;
-        border-radius: 4px;
-        margin-bottom: 10px;
-    }
-    
-    .message.error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-    
-    .message.success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-    
-    .dashboard-container {
-        max-width: 600px;
-        margin: 40px auto;
-        padding: 20px;
-        background-color: #f9f9f9;
-        border-radius: 5px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    .user-info {
-        margin: 20px 0;
-        padding: 15px;
-        background-color: #fff;
-        border-radius: 4px;
-        border-left: 4px solid #007bff;
-    }
-`;
-            document.head.appendChild(style);
             
             // In a real app, you would send this to a server
             // For demo purposes, just redirect to dashboard
@@ -339,10 +51,265 @@
             // For demo purposes, just redirect to dashboard
             showPage('dashboard-page');
         }
+
+        // Doctor database
+        const doctors = {
+            cardiology: [
+                { id: 1, name: "Dr. Paris Ramadwa" },
+                { id: 2, name: "Dr. Tlotlo Molefe" }
+            ],
+            neurology: [
+                { id: 3, name: "Dr. Milicent Mogane" },
+                { id: 4, name: "Dr. Karabo Mbeki" }
+            ],
+            orthopedics: [
+                { id: 5, name: "Dr. Letlhogonolo Kwazi" },
+                { id: 6, name: "Dr. Reitumetse Mosehla" }
+            ],
+            pediatrics: [
+                { id: 7, name: "Dr. Nkateko Mkhabela" },
+                { id: 8, name: "Dr. Azola Jokweni" }
+            ],
+            dermatology: [
+                { id: 9, name: "Dr. Precious Moloi" },
+                { id: 10, name: "Dr. David Makhura" }
+            ]
+        };
+
+
+      // Appointments array to store booked appointments
+        let appointments = [
+            {
+                id: 1,
+                doctor: "Dr. Paris Ramadwa",
+                department: "Cardiology",
+                date: "May 5, 2025",
+                time: "10:30 AM",
+                notes: "Follow-up after cardiac stress test",
+                status: "confirmed"
+            },
+            {
+                id: 2,
+                doctor: "Dr. Milicent Mogane",
+                department: "Neurology",
+                date: "May 12, 2025",
+                time: "2:15 PM",
+                notes: "Recurring headaches investigation",
+                status: "pending"
+            }
+        ];
+
+        // Elements
+        const departmentSelect = document.getElementById('department');
+        const doctorSelect = document.getElementById('doctor');
+        const appointmentDateInput = document.getElementById('appointment-date');
+        const appointmentTimeInput = document.getElementById('appointment-time');
+        const appointmentNotesInput = document.getElementById('appointment-notes');
+        const requestAppointmentBtn = document.getElementById('request-appointment');
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const appointmentDetailsList = document.getElementById('appointment-details');
+        const cancelAppointmentBtn = document.getElementById('cancel-appointment');
+        const confirmAppointmentBtn = document.getElementById('confirm-appointment');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const appointmentsList = document.getElementById('appointments-list');
+
+        // Set minimum date to today
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        appointmentDateInput.min = formattedDate;
+
+        // Event Listeners
+        departmentSelect.addEventListener('change', populateDoctors);
+        requestAppointmentBtn.addEventListener('click', showConfirmationModal);
+        cancelAppointmentBtn.addEventListener('click', closeModal);
+        closeModalBtn.addEventListener('click', closeModal);
+        confirmAppointmentBtn.addEventListener('click', addAppointment);
+        document.getElementById('clear-appointments').addEventListener('click', clearAllAppointments);
+
+        // Functions
+        function populateDoctors() {
+            const department = departmentSelect.value;
+            doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+            
+            if (department) {
+                doctors[department].forEach(doctor => {
+                    const option = document.createElement('option');
+                    option.value = doctor.id;
+                    option.textContent = doctor.name;
+                    doctorSelect.appendChild(option);
+                });
+            }
+        }
+
+        function showConfirmationModal() {
+            // Form validation
+            if (!validateForm()) {
+                return;
+            }
+
+            const department = departmentSelect.options[departmentSelect.selectedIndex].text;
+            const doctorId = doctorSelect.value;
+            const doctorName = doctorSelect.options[doctorSelect.selectedIndex].text;
+            const date = new Date(appointmentDateInput.value);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            const time = formatTime(appointmentTimeInput.value);
+            const notes = appointmentNotesInput.value;
+
+            // Populate confirmation modal
+            appointmentDetailsList.innerHTML = `
+                <p><strong>Department:</strong> ${department}</p>
+                <p><strong>Doctor:</strong> ${doctorName}</p>
+                <p><strong>Date:</strong> ${formattedDate}</p>
+                <p><strong>Time:</strong> ${time}</p>
+                ${notes ? `<p><strong>Notes:</strong> ${notes}</p>` : ''}
+            `;
+
+            // Show modal
+            confirmationModal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            confirmationModal.style.display = 'none';
+        }
+
+        function addAppointment() {
+            const department = departmentSelect.options[departmentSelect.selectedIndex].text;
+            const doctorName = doctorSelect.options[doctorSelect.selectedIndex].text;
+            const date = new Date(appointmentDateInput.value);
+            const formattedDate = date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            const time = formatTime(appointmentTimeInput.value);
+            const notes = appointmentNotesInput.value;
+
+            // Create new appointment object
+            const newAppointment = {
+                id: appointments.length + 1,
+                doctor: doctorName,
+                department: department,
+                date: formattedDate,
+                time: time,
+                notes: notes,
+                status: "confirmed" // Set initial status as confirmed
+            };
+
+            // Add to appointments array
+            appointments.push(newAppointment);
+
+            // Update UI
+            updateAppointmentsList();
+
+            // Close modal and reset form
+            closeModal();
+            document.getElementById('booking-form').reset();
+            doctorSelect.innerHTML = '<option value="">Select Doctor</option>';
+        }
+
+        function updateAppointmentsList() {
+            appointmentsList.innerHTML = '';
+            
+            if (appointments.length === 0) {
+                appointmentsList.innerHTML = '<p>No appointments scheduled.</p>';
+                return;
+            }
+
+            appointments.sort((a, b) => {
+                const dateA = new Date(a.date + ' ' + a.time);
+                const dateB = new Date(b.date + ' ' + b.time);
+                return dateA - dateB;
+            });
+
+            appointments.forEach(appointment => {
+                const listItem = document.createElement('li');
+                listItem.className = 'ticket-item';
+                listItem.innerHTML = `
+                    <div>
+                        <strong>${appointment.doctor}</strong> - ${appointment.department}
+                        <p>${appointment.date} at ${appointment.time}</p>
+                        ${appointment.notes ? `<p><em>Notes: ${appointment.notes}</em></p>` : ''}
+                    </div>
+                    <span class="ticket-status status-${appointment.status}">${capitalize(appointment.status)}</span>
+                `;
+                appointmentsList.appendChild(listItem);
+            });
+        }
+
+        function validateForm() {
+            const department = departmentSelect.value;
+            const doctor = doctorSelect.value;
+            const date = appointmentDateInput.value;
+            const time = appointmentTimeInput.value;
+
+            if (!department || !doctor || !date || !time) {
+                alert('Please fill all required fields.');
+                return false;
+            }
+
+            // Check if date is in the past
+            const selectedDate = new Date(date);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            
+            if (selectedDate < today) {
+                alert('Please select a future date.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function formatTime(time24h) {
+            const [hours, minutes] = time24h.split(':');
+            let period = 'AM';
+            let hour = parseInt(hours);
+            
+            if (hour >= 12) {
+                period = 'PM';
+                if (hour > 12) {
+                    hour -= 12;
+                }
+            }
+            
+            if (hour === 0) {
+                hour = 12;
+            }
+            
+            return `${hour}:${minutes} ${period}`;
+        }
+
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function logout() {
+            alert('Logging out...');
+            // In a real application, this would redirect to the login page
+            // window.location.href = 'login.html';
+        }
         
+        function clearAllAppointments() {
+            if (appointments.length === 0) {
+                alert('You have no appointments to clear.');
+                return;
+            }
+            
+            if (confirm('Are you sure you want to clear all your appointments? This action cannot be undone.')) {
+                appointments = [];
+                updateAppointmentsList();
+                alert('All appointments have been cleared successfully.');
+            }
+        }
+
+        // Initialize page
+        updateAppointmentsList();
         // Logout function
         function logout() {
             // In a real app, you would clear session/storage
             showPage('home-page');
         }
-   
